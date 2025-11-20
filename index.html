@@ -1,38 +1,36 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Refixeka</title>
+    <title>Refixek's Blog</title>
     <style>
-        /* OGÓLNY WYGLĄD STRONY (Czerwono-Czarny klimat) */
+        /* GENERAL PAGE LOOK (Red-Black Theme) */
         body {
             margin: 0;
             padding: 0;
-            /* Ciemne tło z gradientem w stronę czerwieni */
             background: linear-gradient(135deg, #000000 0%, #3a0000 100%);
             font-family: 'Arial', sans-serif;
-            color: #000000; /* Domyślny kolor tekstu */
+            color: #000000;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
-        /* GŁÓWNY KONTENER (Białe tło, czarny tekst - dla czytelności) */
+        /* MAIN CARD (White background for readability) */
         .profile-card {
             background-color: #ffffff;
             width: 90%;
             max-width: 600px;
             padding: 40px;
             border-radius: 15px;
-            /* Czerwona poświata (cień) wokół karty */
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
             text-align: center;
-            border-top: 10px solid #cc0000; /* Czerwony akcent na górze */
+            border-top: 10px solid #cc0000;
         }
 
-        /* STYLIZACJA TEKSTÓW */
+        /* TEXT STYLING */
         h1 {
             font-size: 2.5em;
             margin-bottom: 5px;
@@ -41,7 +39,7 @@
         }
 
         h2 {
-            color: #cc0000; /* Nickname na czerwono */
+            color: #cc0000;
             margin-top: 0;
             font-weight: bold;
         }
@@ -53,16 +51,16 @@
             margin: 20px auto;
         }
 
-        /* LISTA INFORMACJI */
+        /* INFO LIST */
         .info-list {
             list-style: none;
             padding: 0;
-            text-align: left; /* Tekst wyrównany do lewej dla łatwego czytania */
+            text-align: left;
             margin-top: 30px;
         }
 
         .info-list li {
-            padding: 10px 0;
+            padding: 15px 0;
             border-bottom: 1px solid #eee;
             font-size: 1.1em;
         }
@@ -72,7 +70,6 @@
             margin-right: 10px;
         }
 
-        /* Specjalny styl dla ulubionych kolorów */
         .color-sample {
             display: inline-block;
             width: 15px;
@@ -81,9 +78,36 @@
             margin-left: 5px;
             border: 1px solid #ccc;
         }
+
+        /* BUTTONS STYLE */
+        .button-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* Space between buttons */
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background-color: #000000; /* Black background */
+            color: #ffffff; /* White text */
+            padding: 12px 25px;
+            text-decoration: none; /* No underline */
+            border-radius: 8px;
+            font-weight: bold;
+            border: 2px solid #cc0000; /* Red border */
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #cc0000; /* Becomes red on hover */
+            color: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 0 10px #cc0000;
+        }
         
         footer {
-            margin-top: 30px;
+            margin-top: 40px;
             font-size: 0.8em;
             color: #666;
         }
@@ -92,7 +116,7 @@
 <body>
 
     <div class="profile-card">
-        <h1>Cześć, jestem Leo!</h1>
+        <h1>Hi, I'm Leo!</h1>
         <h2>(aka Refixek)</h2>
 
         <div class="divider"></div>
@@ -100,24 +124,30 @@
         <ul class="info-list">
             <li>
                 <span class="label">👾 Hobby:</span> 
-                Piłka Nożna 
-
-[Image of soccer ball]
-
+                Soccer
+                <br>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" alt="Soccer Ball" width="50" style="margin-top: 10px;">
             </li>
             <li>
-                <span class="label">🎮 Ulubiona Gra:</span> 
+                <span class="label">🎮 Favorite Game:</span> 
                 Rust
+                <br>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Rust_videogame_logo.svg/320px-Rust_videogame_logo.svg.png" alt="Rust Logo" width="100" style="margin-top: 10px;">
             </li>
             <li>
-                <span class="label">🎨 Ulubione Kolory:</span> 
-                Czerwony <span class="color-sample" style="background: red;"></span> 
-                lub Fioletowy <span class="color-sample" style="background: purple;"></span>
+                <span class="label">🎨 Favorite Colors:</span> 
+                Red <span class="color-sample" style="background: red;"></span> 
+                or Purple <span class="color-sample" style="background: purple;"></span>
             </li>
         </ul>
 
+        <div class="button-container">
+            <a href="https://www.tiktok.com/@refixek" class="btn" target="_blank">Tiktok</a>
+            <a href="https://gemini.google.com" class="btn" target="_blank">How I Coded This?</a>
+        </div>
+
         <footer>
-            Witamy na moim oficjalnym blogu.
+            Welcome to my official blog.
         </footer>
     </div>
 
