@@ -1,41 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Refixek's Blog</title>
     <style>
-        /* GENERAL PAGE LOOK (Red-Black Theme) */
-        body {
+        /* RESET I OGÓLNE STYLE */
+        body, html {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #000000 0%, #3a0000 100%);
+            width: 100%;
+            height: 100%;
             font-family: 'Arial', sans-serif;
-            color: #000000;
+            overflow-x: hidden; /* Ukryj paski przewijania na boki */
+        }
+
+        /* TŁO I PARTICLES */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Tło pod spodem */
+            background: linear-gradient(135deg, #800000 0%, #3a0000 100%); /* Czerwone tło */
+        }
+
+        /* EKRAN WYBORU JĘZYKA (Pełny ekran) */
+        #language-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85); /* Ciemna nakładka */
             display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Zawsze na wierzchu */
+            transition: opacity 0.5s ease;
+        }
+
+        #language-screen h1 {
+            color: white;
+            font-size: 3em;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-bottom: 3px solid #cc0000;
+        }
+
+        .lang-btn {
+            background-color: #000000;
+            color: #ffffff;
+            border: 2px solid #cc0000;
+            padding: 15px 40px;
+            margin: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: bold;
+            min-width: 150px;
+        }
+
+        .lang-btn:hover {
+            background-color: #cc0000;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px red;
+        }
+
+        /* GŁÓWNA ZAWARTOŚĆ (Ukryta na start) */
+        #main-content {
+            display: none; /* Ukryte dopóki nie wybierzesz języka */
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px;
+            opacity: 0; /* Dla efektu pojawiania się */
+            transition: opacity 1s ease;
         }
 
-        /* MAIN CARD (White background for readability) */
+        /* KARTA PROFILOWA */
         .profile-card {
             background-color: #ffffff;
-            width: 90%;
+            width: 100%;
             max-width: 600px;
             padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
             text-align: center;
             border-top: 10px solid #cc0000;
+            position: relative;
         }
 
-        /* TEXT STYLING */
-        h1 {
+        h1.main-title {
             font-size: 2.5em;
             margin-bottom: 5px;
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
         h2 {
@@ -51,7 +114,7 @@
             margin: 20px auto;
         }
 
-        /* INFO LIST */
+        /* LISTA INFORMACJI */
         .info-list {
             list-style: none;
             padding: 0;
@@ -63,6 +126,7 @@
             padding: 15px 0;
             border-bottom: 1px solid #eee;
             font-size: 1.1em;
+            color: black;
         }
 
         .label {
@@ -79,30 +143,28 @@
             border: 1px solid #ccc;
         }
 
-        /* BUTTONS STYLE */
+        /* PRZYCISKI DOLNE */
         .button-container {
             margin-top: 30px;
             display: flex;
             justify-content: center;
-            gap: 15px; /* Space between buttons */
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         .btn {
-            background-color: #000000; /* Black background */
-            color: #ffffff; /* White text */
+            background-color: #000000;
+            color: #ffffff;
             padding: 12px 25px;
-            text-decoration: none; /* No underline */
+            text-decoration: none;
             border-radius: 8px;
             font-weight: bold;
-            border: 2px solid #cc0000; /* Red border */
+            border: 2px solid #cc0000;
             transition: all 0.3s ease;
         }
 
         .btn:hover {
-            background-color: #cc0000; /* Becomes red on hover */
-            color: #ffffff;
-            cursor: pointer;
+            background-color: #cc0000;
             box-shadow: 0 0 10px #cc0000;
         }
         
@@ -115,41 +177,181 @@
 </head>
 <body>
 
-    <div class="profile-card">
-        <h1>Hi, I'm Leo!</h1>
-        <h2>(aka Refixek)</h2>
+    <canvas id="canvas-container"></canvas>
 
-        <div class="divider"></div>
-
-        <ul class="info-list">
-            <li>
-                <span class="label">👾 Hobby:</span> 
-                Soccer
-                <br>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" alt="Soccer Ball" width="50" style="margin-top: 10px;">
-            </li>
-            <li>
-                <span class="label">🎮 Favorite Game:</span> 
-                Rust
-                <br>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Rust_videogame_logo.svg/320px-Rust_videogame_logo.svg.png" alt="Rust Logo" width="100" style="margin-top: 10px;">
-            </li>
-            <li>
-                <span class="label">🎨 Favorite Colors:</span> 
-                Red <span class="color-sample" style="background: red;"></span> 
-                or Purple <span class="color-sample" style="background: purple;"></span>
-            </li>
-        </ul>
-
-        <div class="button-container">
-            <a href="https://www.tiktok.com/@refixek" class="btn" target="_blank">Tiktok</a>
-            <a href="https://gemini.google.com" class="btn" target="_blank">How I Coded This?</a>
+    <div id="language-screen">
+        <h1>Language?</h1>
+        <div>
+            <button class="lang-btn" onclick="selectLanguage('pl')">Polski</button>
+            <button class="lang-btn" onclick="selectLanguage('en')">English</button>
         </div>
-
-        <footer>
-            Welcome to my official blog.
-        </footer>
     </div>
 
+    <div id="main-content">
+        <div class="profile-card">
+            <h1 class="main-title" id="txt-greeting">Cześć, jestem Leo!</h1>
+            <h2>(aka Refixek)</h2>
+
+            <div class="divider"></div>
+
+            <ul class="info-list">
+                <li>
+                    <span class="label">👾 Hobby:</span> 
+                    <span id="txt-hobby">Piłka Nożna</span>
+                    <br>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" alt="Soccer" width="50" style="margin-top: 10px;">
+                </li>
+                <li>
+                    <span class="label" id="lbl-game">🎮 Ulubiona Gra:</span> 
+                    Rust
+                    <br>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Rust_videogame_logo.svg/320px-Rust_videogame_logo.svg.png" alt="Rust Logo" width="100" style="margin-top: 10px;">
+                </li>
+                <li>
+                    <span class="label" id="lbl-colors">🎨 Ulubione Kolory:</span> 
+                    <span id="txt-color1">Czerwony</span> <span class="color-sample" style="background: red;"></span> 
+                    <span id="txt-or">lub</span> 
+                    <span id="txt-color2">Fioletowy</span> <span class="color-sample" style="background: purple;"></span>
+                </li>
+            </ul>
+
+            <div class="button-container">
+                <a href="https://www.tiktok.com/@refixek" class="btn" target="_blank">Tiktok</a>
+                <a href="https://gemini.google.com" class="btn" target="_blank" id="btn-code">Jak to zakodowałem?</a>
+            </div>
+
+            <footer id="txt-footer">
+                Witamy na moim oficjalnym blogu.
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. ANIMACJA TŁA (Particles) ---
+        const canvas = document.getElementById("canvas-container");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        // Tworzenie cząsteczki
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            // Rysowanie
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = '#000000'; // CZARNE CZĄSTECZKI
+                ctx.fill();
+            }
+            // Aktualizacja pozycji
+            update() {
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 5) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 2) - 1; // Prędkość
+                let directionY = (Math.random() * 2) - 1;
+                let color = '#000000'; // Kolor cząsteczek
+
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+        }
+
+        init();
+        animate();
+        window.addEventListener('resize', function() {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            init();
+        });
+
+
+        // --- 2. SYSTEM JĘZYKOWY ---
+        
+        // Słownik tekstów
+        const translations = {
+            'pl': {
+                greeting: "Cześć, jestem Leo!",
+                hobby: "Piłka Nożna",
+                lblGame: "🎮 Ulubiona Gra:",
+                lblColors: "🎨 Ulubione Kolory:",
+                color1: "Czerwony",
+                or: "lub",
+                color2: "Fioletowy",
+                btnCode: "Jak to zakodowałem?",
+                footer: "Witamy na moim oficjalnym blogu."
+            },
+            'en': {
+                greeting: "Hi, I'm Leo!",
+                hobby: "Soccer",
+                lblGame: "🎮 Favorite Game:",
+                lblColors: "🎨 Favorite Colors:",
+                color1: "Red",
+                or: "or",
+                color2: "Purple",
+                btnCode: "How I Coded This?",
+                footer: "Welcome to my official blog."
+            }
+        };
+
+        function selectLanguage(lang) {
+            // 1. Podmień teksty
+            document.getElementById('txt-greeting').innerText = translations[lang].greeting;
+            document.getElementById('txt-hobby').childNodes[0].nodeValue = translations[lang].hobby; // Tylko tekst, bez obrazka
+            document.getElementById('lbl-game').innerText = translations[lang].lblGame;
+            document.getElementById('lbl-colors').innerText = translations[lang].lblColors;
+            document.getElementById('txt-color1').innerText = translations[lang].color1;
+            document.getElementById('txt-or').innerText = translations[lang].or;
+            document.getElementById('txt-color2').innerText = translations[lang].color2;
+            document.getElementById('btn-code').innerText = translations[lang].btnCode;
+            document.getElementById('txt-footer').innerText = translations[lang].footer;
+
+            // 2. Ukryj ekran wyboru i pokaż stronę
+            const langScreen = document.getElementById('language-screen');
+            const mainContent = document.getElementById('main-content');
+
+            langScreen.style.opacity = '0';
+            setTimeout(() => {
+                langScreen.style.display = 'none';
+                mainContent.style.display = 'flex'; // Pokaż kontener (flex, żeby wyśrodkować)
+                // Małe opóźnienie dla płynności
+                setTimeout(() => {
+                    mainContent.style.opacity = '1';
+                }, 50);
+            }, 500);
+        }
+    </script>
 </body>
 </html>
