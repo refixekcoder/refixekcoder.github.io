@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Refixeka</title>
+    <style>
+        /* OGÓLNY WYGLĄD STRONY (Czerwono-Czarny klimat) */
+        body {
+            margin: 0;
+            padding: 0;
+            /* Ciemne tło z gradientem w stronę czerwieni */
+            background: linear-gradient(135deg, #000000 0%, #3a0000 100%);
+            font-family: 'Arial', sans-serif;
+            color: #000000; /* Domyślny kolor tekstu */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* GŁÓWNY KONTENER (Białe tło, czarny tekst - dla czytelności) */
+        .profile-card {
+            background-color: #ffffff;
+            width: 90%;
+            max-width: 600px;
+            padding: 40px;
+            border-radius: 15px;
+            /* Czerwona poświata (cień) wokół karty */
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            text-align: center;
+            border-top: 10px solid #cc0000; /* Czerwony akcent na górze */
+        }
+
+        /* STYLIZACJA TEKSTÓW */
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #cc0000; /* Nickname na czerwono */
+            margin-top: 0;
+            font-weight: bold;
+        }
+
+        .divider {
+            height: 2px;
+            background-color: #cc0000;
+            width: 50%;
+            margin: 20px auto;
+        }
+
+        /* LISTA INFORMACJI */
+        .info-list {
+            list-style: none;
+            padding: 0;
+            text-align: left; /* Tekst wyrównany do lewej dla łatwego czytania */
+            margin-top: 30px;
+        }
+
+        .info-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 1.1em;
+        }
+
+        .label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Specjalny styl dla ulubionych kolorów */
+        .color-sample {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-left: 5px;
+            border: 1px solid #ccc;
+        }
+        
+        footer {
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <h1>Cześć, jestem Leo!</h1>
+        <h2>(aka Refixek)</h2>
+
+        <div class="divider"></div>
+
+        <ul class="info-list">
+            <li>
+                <span class="label">👾 Hobby:</span> 
+                Piłka Nożna 
+
+[Image of soccer ball]
+
+            </li>
+            <li>
+                <span class="label">🎮 Ulubiona Gra:</span> 
+                Rust
+            </li>
+            <li>
+                <span class="label">🎨 Ulubione Kolory:</span> 
+                Czerwony <span class="color-sample" style="background: red;"></span> 
+                lub Fioletowy <span class="color-sample" style="background: purple;"></span>
+            </li>
+        </ul>
+
+        <footer>
+            Witamy na moim oficjalnym blogu.
+        </footer>
+    </div>
+
+</body>
+</html>
