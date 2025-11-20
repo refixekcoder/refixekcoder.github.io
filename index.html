@@ -3,100 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Refixek's Blog</title>
+    <title>Refixek Blog</title>
     <style>
-        /* --- RESET I OGÓLNE STYLE --- */
-        body, html {
+        /* TŁO STRONY - Ciemna czerwień */
+        body {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #4a0000 100%);
             font-family: 'Arial', sans-serif;
-            overflow-x: hidden; /* Ukrywa paski przewijania bocznego */
-        }
-
-        /* --- TŁO I PARTICLES (Cząsteczki) --- */
-        #canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Tło pod spodem */
-            /* Czerwony gradient */
-            background: linear-gradient(135deg, #800000 0%, #3a0000 100%);
-        }
-
-        /* --- EKRAN WYBORU JĘZYKA --- */
-        #language-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95); /* Prawie czarne tło */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999; /* Zawsze na wierzchu */
-            transition: opacity 0.5s ease;
-        }
-
-        #language-screen h1 {
-            color: white;
-            font-size: 2.5em;
-            margin-bottom: 40px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            border-bottom: 3px solid #cc0000;
-            text-align: center;
-        }
-
-        .lang-btn {
-            background-color: #000000;
-            color: #ffffff;
-            border: 2px solid #cc0000;
-            padding: 15px 40px;
-            margin: 10px;
-            font-size: 1.2em;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s;
-            font-weight: bold;
-            min-width: 150px;
-        }
-
-        .lang-btn:hover {
-            background-color: #cc0000;
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(204, 0, 0, 0.6);
-        }
-
-        /* --- GŁÓWNA TREŚĆ STRONY --- */
-        #main-content {
-            display: none; /* Ukryte na start */
-            justify-content: center;
-            align-items: center;
+            color: #000000;
             min-height: 100vh;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 1s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* --- KARTA PROFILOWA --- */
+        /* GŁÓWNA KARTA - Biała */
         .profile-card {
             background-color: #ffffff;
-            width: 100%;
-            max-width: 950px; /* Szeroka karta */
-            padding: 40px;
+            width: 90%;
+            max-width: 1000px;
+            padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
-            border-top: 10px solid #cc0000;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.3); /* Czerwona poświata */
+            border-top: 15px solid #cc0000;
+            margin: 20px;
         }
 
-        /* Układ dwóch kolumn (Tekst | Video) */
-        .content-wrapper {
+        /* UKŁAD KOLUMN */
+        .container {
             display: flex;
             flex-wrap: wrap;
-            gap:
+            gap: 30px;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        /* Lewa strona (Tekst) */
+        .left-column {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Prawa strona (Video) */
+        .right-column {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Video Youtube */
+        .video-box {
+            width: 100%;
+            max-width: 450px;
+            aspect-ratio: 16 / 9;
+            border: 4px solid #000;
+            box-shadow: 8px 8px 0px #cc0000;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            color: #cc0000;
+            margin-top: 0;
+        }
+
+        .divider {
+            height: 3px;
+            background-color: #cc0000;
+            width: 100px;
+            margin: 20px 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+            font-size: 1.1em;
+        }
+
+        .bold { font-weight: bold; }
+
+        /* PRZYCISKI */
+        .btn-container {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: black;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            border: 2px solid #cc0000;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+        }
+
+        .btn.twitch { border-color: #9146FF; }
+        .btn.twitch:hover { background: #9146FF; }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #777;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <div class="container">
+            
+            <div class="left-column">
+                <h1>Cześć, jestem Leo!</h1>
+                <h2>(aka Refixek)</h2>
+                <div class="divider"></div>
+
+                <ul>
+                    <li>
+                        <span class="bold">👾 Hobby:</span> Piłka Nożna <br>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" width="40">
+                    </li>
+                    <li>
+                        <span class="bold">🎮 Ulubiona Gra:</span> Rust <br>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Rust_videogame_logo.svg/320px-Rust_videogame_logo.svg.png" width="100">
+                    </li>
+                    <li>
+                        <span class="bold">🎨 Kolory:</span> Czerwony 🔴 lub Fioletowy 🟣
+                    </li>
+                </ul>
+            </div>
+
+            <div class="right-column">
+                <div class="video-box">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/7ONJKhLkII4" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <p style="color:#666; font-size: 0.9em;">Moje Video ⬆️</p>
+            </div>
+
+        </div>
+
+        <div class="btn-container">
+            <a href="https://www.twitch.tv/refixek_rust" class="btn twitch" target="_blank">Twitch</a>
+            <a href="https://www.tiktok.com/@refixek" class="btn" target="_blank">TikTok</a>
+            <a href="https://gemini.google.com" class="btn" target="_blank">Jak to zakodowałem?</a>
+        </div>
+
+        <footer>
+            Oficjalny Blog Refixeka © 2024
+        </footer>
+    </div>
+
+</body>
+</html>
